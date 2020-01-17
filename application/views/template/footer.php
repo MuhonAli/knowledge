@@ -102,7 +102,7 @@
         <span class="fa fa-angle-double-up" aria-hidden="true"></span>
     </a>
     <!-- //move top icon -->
-
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
 <!--- Code Mirror --->
 <script>
     var editor = CodeMirror.fromTextArea(document.getElementById("demotext"), {
@@ -112,7 +112,27 @@
     });
 </script>
 <!--- Code Mirror --->
+<!-- <script>
+$(document).ready(function(){
+  $("#like").click(function(){
+    $("#like").css("color", "#3578E5");
+    var like = parseInt($("#like").text());
+    var like_new = like+1;
+    $("#like").text(like_new);
+    
+  });
 
+  $("#dislike").click(function(){
+    $("#dislike").css("color", "#3578E5");
+    var dislike = parseInt($("#dislike").text());
+    var dislike_new = dislike-1;
+    $("#dislike").text(dislike_new);
+    
+  });
+
+
+});
+</script> -->
 
 </body>
 

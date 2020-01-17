@@ -7,7 +7,7 @@
             <div class="conatiner "> 
             
             
-                <form action="" method="post" >
+                <form action="" method="post" action="<?= base_url()?>Question/add_question" >
                 <div class="col-lg-8 offset-2"> 
                 
                     <h3 class="title-w3 mb-sm-5 mb-4 text-center text-wh font-weight-bold">Ask Your Question</h3>
@@ -31,15 +31,15 @@
                         <select name="category_id"   class="form-control input-lg" >
                         
                             <option value="">Question Category</option>
-                            <option <?php  if(set_value('category_id')=='php') {echo 'selected'; } ?> value="php">php</option>
-                            <option <?php  if(set_value('category_id')=='mysql') {echo 'selected'; } ?> value="mysql">mysql</option>
-                            <option <?php  if(set_value('category_id')=='html') {echo 'selected'; } ?> value="html">html</option>
-                            <option <?php  if(set_value('category_id')=='css') {echo 'selected'; } ?> value="css">css</option>
-                            <option <?php  if(set_value('category_id')=='java') {echo 'selected'; } ?> value="java">java</option>
-                            <option <?php  if(set_value('category_id')=='python') {echo 'selected'; } ?> value="python">python</option>
-                            <option <?php  if(set_value('category_id')=='ruby') {echo 'selected'; } ?> value="ruby">ruby</option>
-                            <option <?php  if(set_value('category_id')=='c') {echo 'selected'; } ?> value="c">c</option>
-                            <option <?php  if(set_value('category_id')=='other') {echo 'selected'; } ?> value="c++">Other</option>
+                            <option <?php  if(set_value('category_id')=='php') {echo 'selected'; } ?> value="1">php</option>
+                            <option <?php  if(set_value('category_id')=='mysql') {echo 'selected'; } ?> value="2">mysql</option>
+                            <option <?php  if(set_value('category_id')=='html') {echo 'selected'; } ?> value="3">html</option>
+                            <option <?php  if(set_value('category_id')=='css') {echo 'selected'; } ?> value="4">css</option>
+                            <option <?php  if(set_value('category_id')=='java') {echo 'selected'; } ?> value="5">java</option>
+                            <option <?php  if(set_value('category_id')=='python') {echo 'selected'; } ?> value="6">python</option>
+                            <option <?php  if(set_value('category_id')=='ruby') {echo 'selected'; } ?> value="7">ruby</option>
+                            <option <?php  if(set_value('category_id')=='c') {echo 'selected'; } ?> value="8">c</option>
+                            <option <?php  if(set_value('category_id')=='other') {echo 'selected'; } ?> value="9">Other</option>
                         
                         </select>
                 
@@ -55,12 +55,13 @@
                         <textarea name="description" class="form-control input-lg" rows="10"  placeholder="Question Description.." required="" ><?=set_value('description')?></textarea>
                     
                     </div>
+                    <div class="error"><?=form_error('description')?></div>
                     
                     <div class="form-group">
 
                         
                     
-                        <textarea name="description" class="form-control input-lg" rows="10"  placeholder="Your Code (optional)" ><?=set_value('code')?></textarea>
+                        <textarea name="code" class="form-control input-lg" rows="10"  placeholder="Your Code (optional)" ><?=set_value('code')?></textarea>
                     
                     </div>
 
@@ -94,3 +95,8 @@
 </section>    
     
     
+<style type="text/css">
+    .error{
+        color: red;
+    }
+</style>

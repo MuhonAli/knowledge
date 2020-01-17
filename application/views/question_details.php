@@ -1,138 +1,150 @@
     <section class="blog_w3ls py-5" id="events">
-        <div class="container py-xl-5 py-lg-3">
-	<section class="form_area" > 
-	
-	
-			<div class="container "> 
-			
-					<?php if($this->session->flashdata('q_message')){
-						echo $this->session->flashdata('q_message');
-					}?>
-			
-			
-				<h1> <i class="icofont icofont-hand-right"></i> <?=$question[0]['title']?> </h1>
-				
-				<br /> 
-				
-				<p> <?=$question[0]['description']?> </p>
-				
-				<br /> 
-				
-				<br /> 
-				
-				<xmp class="jumbotron"><?=strip_tags($question[0]['code']);?></xmp>
-			 <!-- <textarea id="demotext"  readonly ><?=$question[0]['code'];?></textarea>
-		 -->	
-			<!--<pre> <?=$question[0]['code'];?> </pre>---->
-			
-			
-			
-			
-			</div>
-			
-	
-	
-	
-	</section>
-	
-
-	
-	<section class="" > 
+    	<div class="container py-xl-5 py-lg-3">
+    		<section class="form_area" > 
 
 
-	<div class="container">
-	
-		<?php if($this->session->flashdata('message')){
-			echo $this->session->flashdata('message');
-		}?>
-		<div class="Comment"> 
-		
-		<h4>Comment: </h4>
-		
-		<br /> 
-		<div class="container">
-		<form action="<?=base_url()?>Question/comment/<?=$question[0]['id']?>" method="post" > 
-		
-			<div class="form-group">
-				<textarea name="comment" class="form-control input-lg" placeholder="add your comment"></textarea>
-			</div>
-			
-			<div class="error"><?=form_error('comment')?></div>
-			
-			
-			<div class="form-group">
-			
-				<?php  if($this->session->userdata('userid')){ ?>
-				
-						<input type="submit" class="btn btn-primary" value="Add Comment" />
-				
-				<?php  }else {  ?>
-				
-						<input type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" value="Add Comment" />
-			
-				<?php  } ?>
-				
-			</div>
-			<br />
-		
-		
-		</form>
-	</div>
+    			<div class="container "> 
 
-		<?php   
+    				<?php if($this->session->flashdata('message')){
+    					echo $this->session->flashdata('message');
+    				}?>
 
-		if(!empty($comment)){
-			
-			foreach($comment as $row){  
-		
-			?>
-			
-			
-			<div class="comment_area"> 
-			<p><strong> <i class="icofont icofont-comment"></i> <?=$row['u_name']?> </strong> <?=$row['comment']?></p>
-			
-			
-				
-			</div>
-			<br />
-			<?php  
-		
-			}
-		}
-		
-		?>
-		
-		
-		</div>
-	</div>
+
+    				<h1> <i class="icofont icofont-hand-right"></i> <?=$question[0]['title']?> </h1>
+
+    				<br /> 
+
+    				<p> <?=$question[0]['description']?> </p>
+
+    				<br /> 
+
+    				<br /> 
+    				<?php if (!empty($question[0]['code'])) { ?>
+    					<xmp class="jumbotron"><?=strip_tags($question[0]['code']);?></xmp>
+    				<?php } ?>
+
+
+    				<p><i>Asked by : <?=$question[0]['username']?> on: <?php echo(date("d M Y",$question[0]['date'])) ?> </i></p>
+    				<br>
+    			</div>
+
+
+
+
+    		</section>
+
+
+
+    		<section class="" > 
+
+
+    			<div class="container">
+
+    				<div class="Comment"> 
+
+    					<h4>Write an answer: </h4>
+
+    					<br /> 
+    					<div class="container">
+    						<form action="<?=base_url()?>Question/answer/<?=$question[0]['id']?>" method="post" > 
+
+    							<div class="form-group">
+    								<textarea name="answer" class="form-control input-lg" placeholder="write your answer" required=""></textarea>
+    							</div>
+
+    							<div class="error"><?=form_error('answer')?></div>
+
+
+    							<div class="form-group">
+
+    								<input type="submit" class="btn btn-primary" value="Submit" />
+
+    							</div>
+    							<br />
+
+
+    						</form>
+    					</div>
+
+    					<?php   
+
+    					if(!empty($answers)){
+
+    						foreach($answers as $row){  
+    							?>
+    							<div class="comment_area jumbotron"> 
+    								<p><strong> <i class="fa fa-comment" aria-hidden="true"></i> <?=$row['username']?> </strong><br> <?=$row['answer']?></p>
+    								<br>
+     
+        <div class="rating" id="rating2">
+
+<?php  $get_answer_id=  $this->db->select('*')->from('vote')->where('answer_id',$row['id'])->where('user_id',$this->session->userdata('userid'))->get()->result_array(); ?>
+
+<?php
+if ($get_answer_id) {
+
+ if ($get_answer_id[0]['answer_id']==$this->session->userdata('userid') && $get_answer_id[0]['like_answer']==1) { ?>
+
+           <a href="" disabled style="color:black;">Liked</a>
+         <?php }else{ ?>
+         	<a href="<?=base_url()?>Vote/like_answer/<?=$row['id']?>">Like</a>
+<?php } } else{?>
+	<a href="<?=base_url()?>Vote/like_answer/<?=$row['id']?>">Like</a> <?php }?>
+            <span class="likes"><?php echo $like=  $this->db->select('*')->from('vote')->where('answer_id',$row['id'])->where('like_answer',1)->get()->num_rows(); ?></span>
+
+<?php
+if ($get_answer_id) {
+if ($get_answer_id[0]['answer_id']==$this->session->userdata('userid') && $get_answer_id[0]['dislike_answer']==1) { ?>
 	
-	
-	
-	
-	</section>
-	
-	
-	<!-- Modal -->
-	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	  <div class="modal-dialog" role="document">
-		<div class="modal-content">
-		  <div class="modal-header">
-			<h5 class="modal-title" id="exampleModalLabel">Message</h5>
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			  <span aria-hidden="true">&times;</span>
-			</button>
-		  </div>
-		  <div class="modal-body">
-			Please Login.
-		  </div>
-		  <div class="modal-footer">
-			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-			<a href="<?=base_url()?>login"><button type="button" class="btn btn-primary">Login</button></a>
-		  </div>
-		</div>
-	  </div>
-	</div>
-	</div>
-</section>
-	
-	
+           <a href="" disabled style="color:black;">Disliked</a>
+         <?php }else{ ?>
+         	<a href="<?=base_url()?>Vote/dislike_answer/<?=$row['id']?>">Dislike</a>
+<?php } } else{ ?>
+<a href="<?=base_url()?>Vote/dislike_answer/<?=$row['id']?>">Dislike</a>
+ <?php } ?>
+
+            <span class="likes"><?php echo $dislike=  $this->db->select('*')->from('vote')->where('answer_id',$row['id'])->where('dislike_answer',1)->get()->num_rows(); ?></span>
+        </div>
+ 
+    							</div>
+    							<br />
+    							<?php  
+
+    						}
+    					}
+
+    					?>
+
+
+    				</div>
+    			</div>
+
+
+
+
+    		</section>
+
+
+    		<!-- Modal -->
+    		<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    			<div class="modal-dialog" role="document">
+    				<div class="modal-content">
+    					<div class="modal-header">
+    						<h5 class="modal-title" id="exampleModalLabel">Message</h5>
+    						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    							<span aria-hidden="true">&times;</span>
+    						</button>
+    					</div>
+    					<div class="modal-body">
+    						Please Login.
+    					</div>
+    					<div class="modal-footer">
+    						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    						<a href="<?=base_url()?>login"><button type="button" class="btn btn-primary">Login</button></a>
+    					</div>
+    				</div>
+    			</div>
+    		</div>
+    	</div>
+    </section>
+

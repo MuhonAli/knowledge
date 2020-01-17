@@ -6,11 +6,11 @@
                 
                 <!-- form -->
                 <div class="home-form-w3ls mt-5">
-                    <form action="#" method="post">
+                    <form action="<?= base_url()?>Question/index" method="GET">
                         <div class="row">
                             <div class="col-lg-10">
                                 <div class="form-group">
-                                    <input class="form-control" type="text" name="Name" placeholder="What are you looking for?"
+                                    <input class="form-control" type="text" name="title" placeholder="Ask your questions?"
                                         required="">
                                 </div>
                             </div>
@@ -117,9 +117,9 @@
                           
                             </small>
                             <p>  <i class="fa fa-eye"> <?=$question['seen']?> </i>
-                            <i class="fa fa-reply-all"> <?=$question['comment']?></i></p>
+                            <i class="fa fa-reply-all"> <?=$question['answer']?></i></p>
                             <span>
-                                Asked on: March 24,2019
+                                Asked on: <?php echo(date("d M Y",$question['date'])); ?>
                             </span>
 
                         </div>

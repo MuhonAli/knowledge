@@ -58,6 +58,7 @@
                             <li><a href="<?= base_url()?>Login">Login</a></li>
                             <li><a href="<?= base_url()?>Register">Register</a></li>
                             <?php } else{ ?>
+                            <li><a href="<?= base_url()?>Question/my_questions">My Questions</a></li>
                             <li><a href="<?= base_url()?>Logout">Logout</a></li>
                             <?php } ?>
                         </ul>
