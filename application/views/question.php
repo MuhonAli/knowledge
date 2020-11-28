@@ -17,7 +17,7 @@
 
                             </div>
                             <div class="card-body" style="padding: .7rem;">
-                                <p class="text-left"><?=$question['title']?></p>
+                                <p class="text-left"><?=strip_tags(htmlspecialchars($question['title']))?></p>
                             </div>
                             <div class="card-footer blog_w3icon border-top pt-2 mt-3 d-flex justify-content-between" style="margin-top: 0px;padding: 0.1rem 1.25rem">
                                 <small class="text-bl">

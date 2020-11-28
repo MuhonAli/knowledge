@@ -22,7 +22,7 @@
                     <button type="submit" class="btn button-style-w3" value="Login" >Login</button>
 
                     <p class="text-center dont-do text-style-w3ls text-li">Don't have an account?
-                        <a href="register.html" class="font-weight-bold text-li">
+                        <a href="<?=base_url()?>Register" class="font-weight-bold text-li">
                             Register Now</a>
                     </p>
                 </form>

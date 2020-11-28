@@ -8,16 +8,13 @@
                     <h3 class="mb-sm-4 mb-3">Links</h3>
                     <ul class="list-unstyled">
                         <li>
-                            <a href="index.html">Index</a>
+                            <a href="<?= base_url()?>">Home</a>
                         </li>
                         <li>
-                            <a href="#about">About Us</a>
+                            <a href="<?= base_url()?>Contact">About Us</a>
                         </li>
                         <li>
-                            <a href="#what">What We Do?</a>
-                        </li>
-                        <li>
-                            <a href="#gallery">Our Gallery</a>
+                            <a href="<?= base_url()?>Question/add_question">Ask Something</a>
                         </li>
                     </ul>
                 </div>
@@ -25,24 +22,25 @@
                     <h3 class="mb-sm-4 mb-3">Some More</h3>
                     <ul class="list-unstyled">
                         <li>
-                            <a href="#join">Apply Now</a>
+                            <a href="<?= base_url()?>Question">Question</a>
                         </li>
-                        <li>
-                            <a href="#events">Our Events</a>
-                        </li>
-                        <li>
-                            <a href="#courses">Popular Courses</a>
-                        </li>
+                       
+                            <?php if (empty($this->session->userdata('userid'))) { ?>
+                            <li><a href="<?= base_url()?>Login">Login</a></li>
+                            <?php } else{ ?>
+                            <li><a href="<?= base_url()?>Question/my_questions">My Questions</a></li>
+                            <li><a href="<?= base_url()?>Logout">Logout</a></li>
+                            <?php } ?>
                     </ul>
                 </div>
                 <div class="col-lg-3 col-6 footer-grid footer-contact mt-lg-0 mt-4">
                     <h3 class="mb-sm-4 mb-3">Get In Touch</h3>
                     <ul class="list-unstyled">
                         <li>
-                            +01(24) 8543 8088
+                            +01711 123321
                         </li>
                         <li>
-                            <a href="mailto:info@example.com">info@example.com</a>
+                            <a href="mailto:info@example.com">info@knowledge.com</a>
                         </li>
                     </ul>
                 </div>
@@ -64,7 +62,7 @@
         <div class="container">
             <div class="row">
                 <!-- copyright -->
-                <p class="col-lg-8 copy-right-grids text-wh text-lg-left text-center mt-lg-2">© 2019 Knowledge. All Rights Reserved
+                <p class="col-lg-8 copy-right-grids text-wh text-lg-left text-center mt-lg-2">© 2020 Knowledge. All Rights Reserved
                 </p>
                 <!-- //copyright -->
                 <!-- social icons -->
@@ -98,18 +96,40 @@
     </div>
     <!-- //copyright -->
     <!-- move top icon -->
-    <a href="#home" class="move-top text-center">
+    <a href="#move-to-top" onclick="topFunction()" class="move-top text-center" id="myBtn">
         <span class="fa fa-angle-double-up" aria-hidden="true"></span>
     </a>
     <!-- //move top icon -->
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
 <!--- Code Mirror --->
 <script>
+
     var editor = CodeMirror.fromTextArea(document.getElementById("demotext"), {
       lineNumbers: true,
       mode: "text/html",
       matchBrackets: true
     });
+</script>
+<script>
+//Get the button
+var mybutton = document.getElementById("myBtn");
+
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    mybutton.style.display = "block";
+  } else {
+    mybutton.style.display = "none";
+  }
+}
+
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+}
 </script>
 <!--- Code Mirror --->
 <!-- <script>

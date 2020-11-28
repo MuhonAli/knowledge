@@ -7,7 +7,8 @@ class Contact extends CI_Controller {
  
 	public function index()
 	{
-
+		if(($this->session->userdata('userid'))){
+		}else{ redirect('Login'); }
 		$this->form_validation->set_rules('name', 'Name', 'required|english_check');
 
 		$this->form_validation->set_rules('email', 'Email', 'required');
@@ -41,6 +42,14 @@ class Contact extends CI_Controller {
 			$data['email']=$this->input->post('email');
 			$data['subject']=$this->input->post('subject');
 			$data['message']=$this->input->post('message');
+			$data['message']=$this->input->post('message');
+			$data['message_to']=1;
+			
+			date_default_timezone_set("Asia/Dhaka");
+			$data['created_on']=strtotime('now');
+		if(($this->session->userdata('userid'))){
+			$data['message_from'] = $this->session->userdata('userid');
+		}
 
 			$this->db->insert('contact',$data);
 
@@ -53,6 +62,26 @@ class Contact extends CI_Controller {
 	}
 }
 
+
+
+public function my_messages(){
+
+		if(($this->session->userdata('userid'))){
+			$userid = $this->session->userdata('userid');
+		} else{
+			redirect('Login');
+		}
+
+			$data['results']=$this->db
+			->group_start()->where('message_from',$userid)->or_where('message_from',1)->group_end()
+			->group_start()->or_where('message_to',1)->or_where('message_to',$userid)->group_end()
+			->get('contact')->result_array();
+			//var_dump($result);
+			$this->load->view('template/header');
+			$this->load->view('my_messages', $data);
+			$this->load->view('template/footer');
+
+}
 
 public function messages(){
 

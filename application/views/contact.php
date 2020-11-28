@@ -13,7 +13,7 @@
                             <div class="error"><?=form_error('name')?></div>
 
                             <div class="form-group">
-                                <input class="form-control" type="email" name="email" value="<?=set_value('email')?>" placeholder="Email" required="">
+                                <input class="form-control" type="email" name="email" <?php if ($this->session->userdata('userid')) { ?> value="<?=$this->session->userdata('email')?>" <?php } else{ ?> value="<?=set_value('email')?>" <?php } ?> placeholder="Email" required="">
                             </div>
                             <div class="error"><?=form_error('email')?></div>
 

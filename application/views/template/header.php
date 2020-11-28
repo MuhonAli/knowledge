@@ -36,7 +36,7 @@
 
 <body>
     <!-- header -->
-    <header>
+    <header id="move-to-top">
         <div class="container" id="home">
             <div class="header d-lg-flex justify-content-between align-items-center py-2 px-sm-2 px-1">
                 <!-- logo -->
@@ -50,7 +50,7 @@
                         <label for="drop" class="toggle">Menu</label>
                         <input type="checkbox" id="drop" />
                         <ul class="menu">
-                            <li><a href="<?= base_url()?>">Home</a></li>
+                            <!-- <li><a href="<?= base_url()?>">Home</a></li> -->
                             <li><a href="<?= base_url()?>Question">Questions</a></li>
                             <li><a href="<?= base_url()?>Question/add_question">Ask Something</a></li>
                             <li><a href="<?= base_url()?>Contact">Contact</a></li>
@@ -58,8 +58,12 @@
                             <li><a href="<?= base_url()?>Login">Login</a></li>
                             <li><a href="<?= base_url()?>Register">Register</a></li>
                             <?php } else{ ?>
-                            <li><a href="<?= base_url()?>Question/my_questions">My Questions</a></li>
-                            <li><a href="<?= base_url()?>Logout">Logout</a></li>
+                    <li><a  href="<?= base_url()?>Question/my_questions">My Questions</a></li>
+                    <li><a  href="<?= base_url()?>Contact/my_messages">Messages</a></li>
+                    <li><a href="<?= base_url()?>Logout">Logout</a></li>
+                    <li>
+                        
+                    </li>
                             <?php } ?>
                         </ul>
                     </nav>

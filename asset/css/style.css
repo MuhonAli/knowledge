@@ -180,6 +180,20 @@ nav ul {
     position: relative;
 }
 
+
+.category_icon{
+    background: none;
+    border: none;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+
+.category_icon:hover{
+    background: #ff7f62;
+    color: white;
+    padding: 3px;
+}
 /* Positioning the navigation items inline */
 nav ul li {
     margin: 0px;

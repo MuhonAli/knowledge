@@ -39,14 +39,17 @@ class Vote extends CI_Controller {
 				$data['answer_id']=$id;
 				$data['user_id']=$this->session->userdata('userid');
 				
-				$check=  $this->db->select('*')->from('vote')->where('answer_id',$id)->where('user_id',$data['user_id'])->get();
+				$check=  $this->db->select('*')->from('vote')->where('answer_id',$id)->where('user_id',$data['user_id'])->get()->result_array();
 			
-				$check_number = $check->num_rows();
+
+				$check_number = count($check);
+
 
 				if ($check_number==1) {
+
 					$this->db->set('like_answer',0);
 					$this->db->set('dislike_answer',1);
-					$this->db->where('answer_id',$id);
+					$this->db->where('id',$check[0]['id']);
 					$this->db->update('vote');
 				}
 				else{

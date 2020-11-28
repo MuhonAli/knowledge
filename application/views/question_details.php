@@ -10,17 +10,17 @@
     				}?>
 
 
-    				<h1> <i class="icofont icofont-hand-right"></i> <?=$question[0]['title']?> </h1>
+    				<h1> <i class="icofont icofont-hand-right"></i> <?=strip_tags(htmlspecialchars($question[0]['title']))?> </h1>
 
     				<br /> 
 
-    				<p> <?=$question[0]['description']?> </p>
+    				<p> <?=strip_tags(htmlspecialchars($question[0]['description']))?> </p>
 
     				<br /> 
 
     				<br /> 
     				<?php if (!empty($question[0]['code'])) { ?>
-    					<xmp class="jumbotron"><?=strip_tags($question[0]['code']);?></xmp>
+    					<p class="jumbotron"><?=strip_tags(htmlspecialchars($question[0]['code']));?></p>
     				<?php } ?>
 
 
@@ -75,76 +75,76 @@
     							<div class="comment_area jumbotron"> 
     								<p><strong> <i class="fa fa-comment" aria-hidden="true"></i> <?=$row['username']?> </strong><br> <?=$row['answer']?></p>
     								<br>
-     
-        <div class="rating" id="rating2">
 
-<?php  $get_answer_id=  $this->db->select('*')->from('vote')->where('answer_id',$row['id'])->where('user_id',$this->session->userdata('userid'))->get()->result_array(); ?>
+                    <div class="rating" id="rating2">
 
-<?php
-if ($get_answer_id) {
+                      <?php  $get_answer_id=  $this->db->select('*')->from('vote')->where('answer_id',$row['answerId'])->where('user_id',$this->session->userdata('userid'))->get()->result_array(); ?>
 
- if ($get_answer_id[0]['answer_id']==$this->session->userdata('userid') && $get_answer_id[0]['like_answer']==1) { ?>
+                      <?php
+                      if ($get_answer_id) {
 
-           <a href="" disabled style="color:black;">Liked</a>
-         <?php }else{ ?>
-         	<a href="<?=base_url()?>Vote/like_answer/<?=$row['id']?>">Like</a>
-<?php } } else{?>
-	<a href="<?=base_url()?>Vote/like_answer/<?=$row['id']?>">Like</a> <?php }?>
-            <span class="likes"><?php echo $like=  $this->db->select('*')->from('vote')->where('answer_id',$row['id'])->where('like_answer',1)->get()->num_rows(); ?></span>
+                        if ($get_answer_id[0]['user_id']==$this->session->userdata('userid') && $get_answer_id[0]['like_answer']==1) { ?>
 
-<?php
-if ($get_answer_id) {
-if ($get_answer_id[0]['answer_id']==$this->session->userdata('userid') && $get_answer_id[0]['dislike_answer']==1) { ?>
-	
-           <a href="" disabled style="color:black;">Disliked</a>
-         <?php }else{ ?>
-         	<a href="<?=base_url()?>Vote/dislike_answer/<?=$row['id']?>">Dislike</a>
-<?php } } else{ ?>
-<a href="<?=base_url()?>Vote/dislike_answer/<?=$row['id']?>">Dislike</a>
- <?php } ?>
+                         <a href="" disabled style="color:black;">Liked</a>
+                       <?php }else{ ?>
+                        <a href="<?=base_url()?>Vote/like_answer/<?=$row['answerId']?>">Like</a>
+                      <?php } } else{?>
+                       <a href="<?=base_url()?>Vote/like_answer/<?=$row['answerId']?>">Like</a> <?php }?>
+                       <span class="likes"><?php echo $like=  $this->db->select('*')->from('vote')->where('answer_id',$row['answerId'])->where('like_answer',1)->get()->num_rows(); ?></span>
 
-            <span class="likes"><?php echo $dislike=  $this->db->select('*')->from('vote')->where('answer_id',$row['id'])->where('dislike_answer',1)->get()->num_rows(); ?></span>
+                       <?php
+                       if ($get_answer_id) {
+                        if ($get_answer_id[0]['user_id']==$this->session->userdata('userid') && $get_answer_id[0]['dislike_answer']==1) { ?>
+
+                         <a href="" disabled style="color:black;">Disliked</a>
+                       <?php }else{ ?>
+                        <a href="<?=base_url()?>Vote/dislike_answer/<?=$row['answerId']?>">Dislike</a>
+                      <?php } } else{ ?>
+                        <a href="<?=base_url()?>Vote/dislike_answer/<?=$row['answerId']?>">Dislike</a>
+                      <?php } ?>
+
+                      <span class="likes"><?php echo $dislike=  $this->db->select('*')->from('vote')->where('answer_id',$row['answerId'])->where('dislike_answer',1)->get()->num_rows(); ?></span>
+                    </div>
+                    
+                  </div>
+                  <br />
+                  <?php  
+
+                }
+              }
+
+              ?>
+
+
+            </div>
+          </div>
+
+
+
+
+        </section>
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+         <div class="modal-dialog" role="document">
+          <div class="modal-content">
+           <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Message</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+           </button>
+         </div>
+         <div class="modal-body">
+          Please Login.
         </div>
- 
-    							</div>
-    							<br />
-    							<?php  
-
-    						}
-    					}
-
-    					?>
-
-
-    				</div>
-    			</div>
-
-
-
-
-    		</section>
-
-
-    		<!-- Modal -->
-    		<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    			<div class="modal-dialog" role="document">
-    				<div class="modal-content">
-    					<div class="modal-header">
-    						<h5 class="modal-title" id="exampleModalLabel">Message</h5>
-    						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-    							<span aria-hidden="true">&times;</span>
-    						</button>
-    					</div>
-    					<div class="modal-body">
-    						Please Login.
-    					</div>
-    					<div class="modal-footer">
-    						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-    						<a href="<?=base_url()?>login"><button type="button" class="btn btn-primary">Login</button></a>
-    					</div>
-    				</div>
-    			</div>
-    		</div>
-    	</div>
-    </section>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <a href="<?=base_url()?>login"><button type="button" class="btn btn-primary">Login</button></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
 

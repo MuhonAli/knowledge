@@ -28,6 +28,16 @@ class Login extends CI_Controller {
 
 			if ($result) {
 
+				if ($result[0]['block']==1) {
+
+				$msg='<div class="alert alert-danger">Sorry! this account has been blocked. </div>';
+
+				$this->session->set_flashdata('message',$msg);
+
+				redirect('Login');
+
+				}
+
 				$this->session->set_userdata('userid', $result[0]['id']);
 				$this->session->set_userdata('email', $result[0]['email']);
 				$this->session->set_userdata('username', $result[0]['username']);	

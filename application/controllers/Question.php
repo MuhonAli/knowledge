@@ -19,9 +19,12 @@ $this->load->library('pagination');
 			$query = $this->db->OR_LIKE('description', $_GET['title'],'both');
 		}
 
+		if (!empty($_GET['category_id'])) {
+			$query = $this->db->where('category_id', $_GET['category_id']);
+		}
 
 
-		$query=$this->db->select('*, questions.id as id')->from('questions')->order_by('users.id','desc')->join('users', 'questions.user_id =users.id')->get();
+		$query=$this->db->select('*, questions.id as id')->from('questions')->where('questions.reject',0)->order_by('questions.id','desc')->join('users', 'questions.user_id =users.id')->get();
 		
 		$data['result'] = $query->result_array();
 
@@ -62,8 +65,12 @@ $this->load->library('pagination');
 		}
 
 
+		if (!empty($_GET['category_id'])) {
+			$query = $this->db->where('category_id', $_GET['category_id']);
+		}
 
-		$query = $this->db->limit($config['per_page'], $data['segment'])->select('*, questions.id as id')->from('questions')->order_by('users.id','desc')->join('users', 'questions.user_id =users.id')->get();
+
+		$query = $this->db->limit($config['per_page'], $data['segment'])->select('*, questions.id as id')->from('questions')->where('questions.reject',0)->order_by('questions.id','desc')->join('users', 'questions.user_id =users.id')->get();
 
 		$data['result'] = $query->result_array();
 
@@ -85,8 +92,7 @@ $this->load->library('pagination');
 		$this->form_validation->set_rules('category_id', 'Category', 'required');
 		
 		$this->form_validation->set_rules('description', 'Description', 'required|min_length[10]');
-		$this->form_validation->set_rules('code', 'code', 'required');
-
+		
 		if ($this->form_validation->run() == FALSE)
 		{
 
@@ -98,7 +104,7 @@ $this->load->library('pagination');
 
 
 			$data['title']=$this->input->post('title');
-			$data['description']=nl2br($this->input->post('description'));
+			$data['description']=$this->input->post('description');
 			$data['code']=$this->input->post('code');
 			$data['category_id']=$this->input->post('category_id');
 			$data['user_id']=$this->session->userdata('userid');
@@ -134,7 +140,7 @@ $this->load->library('pagination');
 
 		$data['question'] = $query->result_array();
 
-		$query=  $this->db->select('*')->from('answer')->order_by('answer.id','desc')->join('users', 'answer.user_id =users.id')->where('answer.question_id',$id)->get();
+		$query=  $this->db->select('*, answer.id as answerId')->from('answer')->order_by('answer.id','desc')->join('users', 'answer.user_id =users.id')->where('answer.question_id',$id)->get();
 		$data['answers'] = $query->result_array();
 
 		$data['id']=$id;
@@ -150,7 +156,7 @@ $this->load->library('pagination');
 		if(($this->session->userdata('userid'))){
 		}else{ redirect('Login'); }
 
-		$check=  $this->db->select('*')->from('answer')->where('question_id',$id)->where('user_id',$this->session->userdata('userid'))->get()->num_rows();
+/*		$check=  $this->db->select('*')->from('answer')->where('question_id',$id)->where('user_id',$this->session->userdata('userid'))->get()->num_rows();
 		if ($check>0) {
 
 			$msg='<div class="alert alert-danger"> You already answered this question! </div>';
@@ -158,7 +164,7 @@ $this->load->library('pagination');
 			$this->session->set_flashdata('message',$msg);
 
 			redirect($_SERVER['HTTP_REFERER']);	
-		}
+		}*/
 
 		$insert_data['answer']=nl2br($this->input->post('answer'));
 		$insert_data['user_id']=$this->session->userdata('userid');
@@ -188,7 +194,7 @@ $this->load->library('pagination');
 
 $this->load->library('pagination');
 
-		$query=$this->db->select('*, questions.id as id')->from('questions')->order_by('users.id','desc')->join('users', 'questions.user_id =users.id')->where('questions.user_id',$this->session->userdata('userid'))->get();
+		$query=$this->db->select('*, questions.id as id')->from('questions')->order_by('questions.id','desc')->join('users', 'questions.user_id =users.id')->where('questions.user_id',$this->session->userdata('userid'))->get();
 
 
 		$data['result'] = $query->result_array();
@@ -223,7 +229,7 @@ $this->load->library('pagination');
 
 		$this->pagination->initialize($config);
 
-		$query = $this->db->limit($config['per_page'], $data['segment'])->select('*, questions.id as id')->from('questions')->order_by('users.id','desc')->join('users', 'questions.user_id =users.id')->where('questions.user_id',$this->session->userdata('userid'))->get();
+		$query = $this->db->limit($config['per_page'], $data['segment'])->select('*, questions.id as id')->from('questions')->order_by('questions.id','desc')->join('users', 'questions.user_id =users.id')->where('questions.user_id',$this->session->userdata('userid'))->get();
 
 		$data['result'] = $query->result_array();
 
@@ -231,6 +237,68 @@ $this->load->library('pagination');
 		$this->load->view('template/header');
 		$this->load->view('my_questions', $data);
 		$this->load->view('template/footer');
+	}
+
+
+
+	public function update_question($id)
+	{
+
+		if(($this->session->userdata('userid'))){
+		}else{ redirect('Login'); }
+
+
+		$this->form_validation->set_rules('title', 'Question title', 'required');
+
+		$this->form_validation->set_rules('category_id', 'Category', 'required');
+		
+		$this->form_validation->set_rules('description', 'Description', 'required|min_length[10]');
+		
+		if ($this->form_validation->run() == FALSE)
+		{
+		$query=  $this->db->select('*, questions.id as id')->from('questions')->order_by('users.id','desc')->join('users', 'questions.user_id =users.id')->where('questions.id',$id)->get();
+
+		$data['question'] = $query->result_array();
+
+
+			$this->load->view('template/header');
+			$this->load->view('update_question',$data);
+			$this->load->view('template/footer');
+
+		}else{
+
+
+			$data['title']=$this->input->post('title');
+			$data['description']=$this->input->post('description');
+			$data['code']=$this->input->post('code');
+			$data['category_id']=$this->input->post('category_id');
+			$data['user_id']=$this->session->userdata('userid');
+			$data['date']=time();
+
+			$this->db->where('id',$id);
+			$this->db->update('questions',$data);
+
+
+			$last_id=$this->db->insert_id();
+
+			$msg='<div class="alert alert-success"> Question updated successfully. </div>';
+
+
+			$this->session->set_flashdata('message',$msg);
+			redirect($_SERVER['HTTP_REFERER']);
+
+
+		}
+
+	}	public function delete_question($id)
+
+
+	{
+		$this->db->where('id',$id);
+		$this->db->delete('questions');
+		$msg='<div class="alert alert-success">Question deleted successfully!</div>';
+		$this->session->set_flashdata('message',$msg);
+		redirect($_SERVER['HTTP_REFERER']);
 	}
 
 
